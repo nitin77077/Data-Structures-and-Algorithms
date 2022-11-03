@@ -1,0 +1,1 @@
+//Prefix Sum(Space :- O(n), Query :- O(1))

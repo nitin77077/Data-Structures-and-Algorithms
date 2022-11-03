@@ -1,4 +1,4 @@
-//Sparse Table Algorithm
+//Sparse Table Algorithm (Space :- O(nlog(n)), Query :- O(1))
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -7,7 +7,8 @@ using namespace std;
 
 vector<vector<int>> lookup(MAX, vector<int> (MAX, 0));
 
-void preprocess(vector<int> arr, int n)
+// O(nlog(n))
+void preprocess(int* arr, int n)
 {
     for(int i=0; i<n; i++)
     {
@@ -23,8 +24,12 @@ void preprocess(vector<int> arr, int n)
     }
 }
 
-int query(vector<int> arr, int L, int R)
+int query(int* arr, int n, int L, int R)
 {
+    if(L >= n || R >= n || L > R)
+    {
+        return -1;
+    }
     int x = (int)log2(R-L+1);
 
     return min(lookup[L][x], lookup[R-(1<<x)+1][x]);
@@ -32,5 +37,8 @@ int query(vector<int> arr, int L, int R)
 
 int main()
 {
-    
+    int arr[] = {1,3,6,8,4,3,6,8,-12,3,2,54,98,3,6,8,5,3,5,8,9,5,4};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    preprocess(arr, n);
+    cout<<query(arr, n, 0, n-1);
 }
